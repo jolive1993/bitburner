@@ -5,7 +5,7 @@ export function isReady(ns, scriptName, sourceHost) {
 		let now = new Date;
 		now = now.getTime() / 1000;
 		let timeDiff = now - lastRun
-		if (timeDiff <= 10) {
+		if (timeDiff <= 2) {
 			return false;
 		}
 	};
