@@ -17,6 +17,6 @@ export async function main(ns) {
 		}
 	}
 	lastRunService.writeLastRunTime(ns, thisScriptName);
-	//ns.exec("launcher.js", sourceHost);
+	ns.exec("launcher.js", sourceHost);
 	//ns.alert(`${sourceHost} - ${thisScriptName}: Did run: true`);
 }
