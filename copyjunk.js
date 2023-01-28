@@ -11,12 +11,9 @@ export async function main(ns) {
         return;
     }
 
-    ns.killall(sourceHost, true);
-
     for await (let host of hosts) {
         if (ns.hasRootAccess(host)) {
             ns.scp(files, host);
-            await ns.killall(host, true);
             ns.exec("prepserver.js", host);
             ns.exec("runlauncher.js", host);
             lastRunService.writeLastRunTime(ns, thisScriptName);
