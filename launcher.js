@@ -1,5 +1,3 @@
-import * as lastRunService from "last-run-service.js";
-
 export async function main(ns) {
 
 	function* shuffle(arr) {

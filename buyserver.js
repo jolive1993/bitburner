@@ -6,12 +6,24 @@ export async function main(ns) {
     let player = ns.getPlayer();
     let purchasedServers = ns.getPurchasedServers();
 
-    while(player.money > serverCost && serverLimit > purchasedServers.length - 1){
+    ns.print(player.money);
+    ns.print(purchasedServers);
+    ns.print(serverLimit);
+    ns.print(serverCost);
+    ns.print(purchasedServers.length);
+
+    while(player.money > serverCost && serverLimit > purchasedServers.length){
         ns.purchaseServer(`${serverName}${purchasedServers.length}`, serverRamArg)
         player = ns.getPlayer();
         purchasedServers = ns.getPurchasedServers();
     }
-
-    ns.print(serverLimit);
-    ns.print(serverCost);
-}
+        for await (let host of purchasedServers) {
+            let upgradeCost = ns.getPurchasedServerUpgradeCost(host, serverRamArg)
+            ns.print(`${host} upgrade cost : ${upgradeCost}`);
+            if(player.money > upgradeCost){
+                ns.upgradePurchasedServer(host, serverRamArg)
+                player = ns.getPlayer();
+            }
+        }
+    
+    }
