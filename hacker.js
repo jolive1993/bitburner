@@ -9,7 +9,7 @@ export async function main(ns) {
 		if (money < 50000) {
 			await ns.grow(host)
 		}
-		else if (minSecurityLevel < (scurityLevel * 1.1)) {
+		else if ((minSecurityLevel * 1.15) < scurityLevel) {
 			await ns.weaken(host);
 		}
 		else {
