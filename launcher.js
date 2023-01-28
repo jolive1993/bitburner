@@ -16,7 +16,7 @@ export async function main(ns) {
 	hosts.unshift(sourceHost);
 	hosts = hosts.filter(x => x !== "home" && !x.includes("purchased-server-"));
 	if(hosts.length < 1){
-		hosts = ["n00dles", "foodnstuff", "sigma-cosmetics", "joesguns", "hong-fang-tea", "harakiri-sushi", "iron-gym"]
+		hosts = ["n00dles", "foodnstuff", "sigma-cosmetics", "joesguns", "hong-fang-tea", "harakiri-sushi", "iron-gym", "zer0", "omega-net", "silver-helix", "nectar-net", "neo-net", "phantasy", "CSEC"]
 		hosts = [...shuffle(hosts)]
 	}
 	let threads = Math.floor((thisServer.maxRam - ns.getServerUsedRam(sourceHost)) / hackerRamCost)
