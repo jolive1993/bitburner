@@ -10,10 +10,9 @@ export async function main(ns) {
 		return;
 	}
 
-	ns.killall(sourceHost);
+	ns.killall(sourceHost, true);
 
 	for await (let host of hosts) {
-			ns.killall(host, true);
 			ns.exec(thisScriptName, host);
             lastRunService.writeLastRunTime(ns, thisScriptName);
     

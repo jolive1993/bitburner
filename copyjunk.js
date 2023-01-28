@@ -23,6 +23,7 @@ export async function main(ns) {
             ns.exec(thisScriptName, host);
         }
     }
+    ns.exec("runlauncher.js", sourceHost);
     //ns.alert(`${sourceHost} - ${thisScriptName}: Did run: true`);
 
 }
