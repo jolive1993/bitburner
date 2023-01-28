@@ -8,27 +8,32 @@ export async function main(ns) {
 
 function* shuffle(arr) {
     arr = [...arr];
-    while(arr.length) yield arr.splice(Math.random()*arr.length|0, 1)[0]
-  }
+    while (arr.length) yield arr.splice(Math.random() * arr.length | 0, 1)[0]
+}
 
 async function hackServers(ns, allServers, hackableServers) {
     const hackScript = "hacker.js";
     for await (let host of allServers) {
         let hackerRamCost = ns.getScriptRam(hackScript);
         let thisServer = ns.getServer(host);
+        if (!ns.hasRootAccess(host)) {
+            try {
+                ns.brutessh(host);
+                ns.relaysmtp(host);
+                ns.ftpcrack(host);
+                ns.httpworm(host)
+                ns.nuke(host);
+            } catch {
+                ns.tprint(`${host}: could not nuke \n`)
+            }
+        }
         if (ns.hasRootAccess(host)) {
             let threads = Math.floor((thisServer.maxRam - ns.getServerUsedRam(host)) / hackerRamCost)
+            ns.tprint(`${host} ${threads}`)
             if (threads <= 0) {
-                ns.alert(`${host} could not hack, not enough ram for a single thread.`);
                 continue;
             }
             ns.exec(hackScript, host, threads, hackableServers.includes(host) ? host : [...shuffle(hackableServers)][0]);
-        } else {
-            try {
-                ns.exec("prepserver.js", host);
-            } catch {
-
-            }
         }
     }
 }

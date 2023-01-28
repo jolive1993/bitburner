@@ -1,26 +1,14 @@
-import * as lastRunService from "last-run-service.js";
+import * as scanService from "scan-service.js";
 
 export async function main(ns) {
     let sourceHost = ns.getHostname();
-    let hosts = ns.scan().filter(x => x !== "home");
+    let hosts = await scanService.ServersScan(ns, "home");
     let files = ns.ls(sourceHost, ".js");
-    let thisScriptName = ns.getScriptName()
-
-    if (!lastRunService.isReady(ns, thisScriptName, sourceHost)) {
-        //ns.alert(`${sourceHost} - ${thisScriptName}: Did run: false`);
-        return;
-    }
 
     for await (let host of hosts) {
         if (ns.hasRootAccess(host)) {
             ns.scp(files, host);
-            ns.exec("prepserver.js", host);
-            ns.exec("runlauncher.js", host);
-            lastRunService.writeLastRunTime(ns, thisScriptName);
-            ns.exec(thisScriptName, host);
         }
     }
-    ns.exec("runlauncher.js", sourceHost);
-    //ns.alert(`${sourceHost} - ${thisScriptName}: Did run: true`);
 
 }
