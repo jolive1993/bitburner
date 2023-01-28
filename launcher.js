@@ -7,7 +7,6 @@ export async function main(ns) {
 	const thisServer = ns.getServer(sourceHost);
 
 	let hosts = ns.scan(sourceHost);
-
 	hosts.unshift(sourceHost);
 	hosts = hosts.filter(x => x !== "home");
 
