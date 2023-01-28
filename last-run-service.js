@@ -1,4 +1,3 @@
-/** @param {NS} ns **/
 export function isReady(ns, scriptName, sourceHost) {
 	let fileName = scriptName.replace(".js", ".txt");
 	if (ns.fileExists(fileName, sourceHost)) {
