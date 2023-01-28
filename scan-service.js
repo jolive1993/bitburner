@@ -1,13 +1,6 @@
-let serverChecked = [];
-let checkList = [];
-export async function main(ns) {
-    await ServersScan(ns, 'home');
-    serverChecked = serverChecked.filter(x => x !== "home");
-    let hackableServers = serverChecked.filter(x => ns.getServerMoneyAvailable(x) > 0 && !x.includes("purchased-server-") && ns.hasRootAccess(x));
-    await hackServers(ns, serverChecked, hackableServers);
-    //await printArray(ns, serverChecked);
-}
 export async function ServersScan(ns, target) {
+    let serverChecked = [];
+    let checkList = [];
     var servers1 = await ns.scan(target);
     for (var server in servers1) {
         if (!checkList.includes(servers1[server])) {
@@ -30,4 +23,6 @@ export async function ServersScan(ns, target) {
             }
         }
     }
+    serverChecked = serverChecked.filter(x => x !== "home");
+    return serverChecked;
 }
