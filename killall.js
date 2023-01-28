@@ -1,13 +1,12 @@
 import * as scanService from "scan-service.js";
 
 export async function main(ns) {
-    let serverChecked = await scanService.ServersScan(ns, "home");
-    let hackableServers = serverChecked.filter(x => ns.getServerMoneyAvailable(x) > 0 && !x.includes("purchased-server-") && ns.hasRootAccess(x));
-    await hackServers(ns, serverChecked, hackableServers);
+    let allServers = await scanService.ServersScan(ns, "home");
+    await killallServers(ns, allServers);
 }
 
-async function hackServers(ns, serverList, hackableServers) {
-    for await (let host of serverList) {
+async function killallServers(ns, allServers) {
+    for await (let host of allServers) {
 		ns.killall(host);
     }
 }

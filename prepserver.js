@@ -9,7 +9,8 @@ export async function main(ns) {
             try{
                 ns.brutessh(host);
                 ns.relaysmtp(host);
-                ns.ftpcrack(host)
+                ns.ftpcrack(host);
+                ns.httpworm(host)
                 ns.nuke(host);
             } catch{
             }
