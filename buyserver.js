@@ -1,6 +1,6 @@
 export async function main(ns) {
     const serverName = "purchased-server-"
-    let serverRamArg = ns.args[0];
+    let serverRamArg = ns.args[0] ?? 1048576;
     let serverLimit = ns.getPurchasedServerLimit();
     let serverCost = ns.getPurchasedServerCost(serverRamArg)
     let player = ns.getPlayer();

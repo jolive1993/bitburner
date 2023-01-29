@@ -13,21 +13,35 @@ function* shuffle(arr) {
 
 async function hackServers(ns, allServers, hackableServers) {
     const hackScript = "hacker.js";
+    const sourceHost = ns.getHostname();
     for await (let host of allServers) {
         let hackerRamCost = ns.getScriptRam(hackScript);
         let thisServer = ns.getServer(host);
+        let files = ns.ls(sourceHost, ".js");
         if (!ns.hasRootAccess(host)) {
             try {
-                ns.brutessh(host);
-                ns.relaysmtp(host);
-                ns.ftpcrack(host);
-                ns.httpworm(host)
+                if (ns.fileExists("BruteSSH.exe")) {
+                    ns.brutessh(host);
+                };
+                if (ns.fileExists("relaySMTP.exe")) {
+                    ns.relaysmtp(host);
+                };
+                if (ns.fileExists("FTPCrack.exe")) {
+                    ns.ftpcrack(host);
+                };
+                if (ns.fileExists("HTTPWorm.exe")) {
+                    ns.httpworm(host)
+                };
+                if (ns.fileExists("SQLInject.exe")) {
+                    ns.sqlinject(host)
+                };
                 ns.nuke(host);
-            } catch {
-                ns.tprint(`${host}: could not nuke \n`)
+            } catch (e) {
+                ns.tprint(`${host}: could not nuke ${e}} \n`)
             }
         }
         if (ns.hasRootAccess(host)) {
+            ns.scp(files, host);
             let threads = Math.floor((thisServer.maxRam - ns.getServerUsedRam(host)) / hackerRamCost)
             ns.tprint(`${host} ${threads}`)
             if (threads <= 0) {

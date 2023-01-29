@@ -4,9 +4,10 @@ export async function main(ns) {
 	while (true) {
 		let money = ns.getServerMoneyAvailable(host)
 		let scurityLevel = ns.getServerSecurityLevel(host);
-		let minSecurityLevel = ns.getServerMinSecurityLevel(host)
+		let minSecurityLevel = ns.getServerMinSecurityLevel(host);
+		let maxMoney = ns.getServerMaxMoney(host);
 
-		if (money < 50000) {
+		if (money < maxMoney) {
 			await ns.grow(host)
 		}
 		else if ((minSecurityLevel * 1.15) < scurityLevel) {
